@@ -1,0 +1,12 @@
+# vim:ft=ansible:
+---
+- block:
+  - include: tasks/go.yml
+    when:
+    - languages
+    - languages.go
+  - include: tasks/java.yml
+    when:
+    - languages
+    - languages.java
+

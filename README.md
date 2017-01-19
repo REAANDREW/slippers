@@ -15,3 +15,9 @@ Plugins:
 - NerdTree
 - Jellybeans colorscheme
 
+## Languages
+
+### GO
+
+If you are using VIM you still need to run `:GoInstallBinaries` from inside VIM.  Need to find a way how to do this via ansible setup.
+
