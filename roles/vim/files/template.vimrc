@@ -20,6 +20,8 @@ set foldmethod=indent
 set laststatus=2
 set encoding=utf-8
 
+colorscheme jellybeans
+
 "Code Folding
 nnoremap <space> za
  

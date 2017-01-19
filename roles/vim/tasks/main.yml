@@ -50,21 +50,42 @@
     make install
     chdir=/opt/vim
 - name: Ensure vim plugin directory
-  file: path=/home/vagrant/.vim/pack/vagrant/start/ state=directory
+  file: path=/home/vagrant/.vim/pack/plugins/start/ state=directory
+  become: no
+- name: Ensure vim ftplugin directory
+  file: path=/home/vagrant/.vim/ftplugin state=directory
+  become: no
 - name: Install base plugins
   become: no
   git: 
     repo: "https://github.com/{{ item }}.git"
-    dest: "/home/vagrant/.vim/pack/vagrant/start/{{ item|replace('/', '_') }}"
+    dest: "/home/vagrant/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
   with_items:
-     - 'nanotech/jellybeans.vim'
-     - 'scrooloose/nerdtree'
-#    - 'editorconfig/editorconfig-vim' 
-#    - 'scrooloose/syntastic'
-#    - 'Valloric/YouCompleteMe'
-#    - 'majutsushi/tagbar'
-#    - 'tpope/vim-dispatch'
-#    - 'kristijanhusak/vim-multiple-cursors'
-#    - 'airblade/vim-gitgutter'
+    - 'nanotech/jellybeans.vim'
+    - 'scrooloose/nerdtree'
+    - 'tpope/vim-fugitive'
+#   - 'editorconfig/editorconfig-vim' 
+#   - 'scrooloose/syntastic'
+#   - 'Valloric/YouCompleteMe'
+#   - 'majutsushi/tagbar'
+#   - 'tpope/vim-dispatch'
+#   - 'kristijanhusak/vim-multiple-cursors'
+#   - 'airblade/vim-gitgutter'
 - name: vimrc
   copy: src=template.vimrc dest=/home/vagrant/.vimrc owner=vagrant group=vagrant mode=0644
+  become: no
+- name: vimrc for GO
+  copy: src=go.vim dest=/home/vagrant/.vim/ftplugin/go.vim owner=vagrant group=vagrant mode=0644
+  become: no
+  when:
+    - languages
+    - languages.go
+- name: vim plugins for GO
+  git: 
+    repo: "https://github.com/{{ item }}.git"
+    dest: "/home/vagrant/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
+  with_items:
+    - 'fatih/vim-go'
+  when:
+    - languages
+    - languages.go
