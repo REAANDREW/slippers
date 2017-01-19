@@ -1,0 +1,70 @@
+# vim:ft=ansible:
+---
+- name: Install list of packages
+  become: yes
+  become_method: sudo
+  apt: 
+    name: "{{ item }}"
+    state: installed 
+    update_cache: yes
+  with_items:
+  - build-essential
+  - libncurses5-dev
+  - libgnome2-dev
+  - libgnomeui-dev 
+  - libgtk2.0-dev
+  - libatk1.0-dev
+  - libbonoboui2-dev 
+  - libcairo2-dev
+  - libx11-dev
+  - libxpm-dev
+  - libxt-dev
+  - python-dev 
+  - python3-dev
+  - ruby-dev
+  - lua5.1
+  - liblua5.1-0-dev
+  - libperl-dev
+  - git
+- name: Checkout VIM source
+  become: yes
+  become_method: sudo
+  git:
+    repo: "https://github.com/vim/vim.git"
+    dest: /opt/vim
+- name: Configure VIM
+  become: yes
+  become_method: sudo
+  shell: |
+    ./configure --with-features=huge \
+    --enable-multibyte \
+    --enable-rubyinterp=yes \
+    --enable-pythoninterp=yes \
+    --with-python-config-dir=/usr/lib/python2.7/config \
+    --enable-python3interp=yes \
+    --with-python3-config-dir=/usr/lib/python3.5/config \
+    --enable-perlinterp=yes \
+    --enable-luainterp=yes \
+    --enable-gui=gtk2 --enable-cscope --prefix=/usr &&
+    make VIMRUNTIMEDIR=/usr/share/vim/vim80 &&
+    make install
+    chdir=/opt/vim
+- name: Ensure vim plugin directory
+  file: path=/home/vagrant/.vim/pack/vagrant/start/ state=directory
+- name: Install base plugins
+  become: no
+  git: 
+    repo: "https://github.com/{{ item }}.git"
+    dest: "/home/vagrant/.vim/pack/vagrant/start/{{ item|replace('/', '_') }}"
+  with_items:
+     - 'nanotech/jellybeans.vim'
+     - 'scrooloose/nerdtree'
+#    - 'editorconfig/editorconfig-vim' 
+#    - 'scrooloose/syntastic'
+#    - 'Valloric/YouCompleteMe'
+#    - 'majutsushi/tagbar'
+#    - 'tpope/vim-dispatch'
+#    - 'kristijanhusak/vim-multiple-cursors'
+#    - 'airblade/vim-gitgutter'
+- name: vimrc
+  copy: src=template.vimrc dest=/home/vagrant/.vimrc owner=vagrant group=vagrant mode=0644
