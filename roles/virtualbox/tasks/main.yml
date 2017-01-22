@@ -1,0 +1,15 @@
+# vim:ft=ansible:
+---
+- name: Install Virtual Box Items
+  become: yes
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - virtualbox-guest-additions-iso
+    - virtualbox-guest-dkms
+    - virtualbox-guest-source
+    - virtualbox-guest-utils
+    - virtualbox-guest-x11
+

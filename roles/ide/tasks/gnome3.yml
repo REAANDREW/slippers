@@ -21,8 +21,11 @@
   become: yes
   become_method: sudo
   apt:
-    name: "gnome-shell"
+    name: "{{ item }}"
     state: installed
+  with_items:
+  - "gnome-shell"
+  - "gdm"
 
 - name: Ensure the service is started
   become: yes
