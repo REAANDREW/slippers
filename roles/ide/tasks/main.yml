@@ -1,0 +1,29 @@
+# vim:ft=ansible:
+---
+- name: Download IntelliJ
+  become: yes
+  become_method: sudo
+  command: wget --no-clobber https://download.jetbrains.com/idea/ideaIC-2016.3.3.tar.gz
+  args:
+    chdir: /opt
+  register: intellij_state
+- name: Install Unzip
+  become: yes
+  become_method: sudo
+  apt: 
+    name: "gzip"
+    state: present 
+- name: Unarchive IntelliJ
+  become: yes
+  become_method: sudo
+  unarchive:
+    copy: no
+    src: /opt/ideaIC-2016.3.3.tar.gz
+    dest: /opt
+  when: intellij_state|changed
+- name: add IntelliJ PATH bin to PATH
+  lineinfile: dest=/home/vagrant/.bashrc line="export PATH=$PATH:/opt/ideaIC-2016.3.3/bin/" 
+  become: no
+- name: Install Window Manager to use the IDE
+  include: tasks/gnome3.yml
+

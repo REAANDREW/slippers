@@ -57,7 +57,7 @@
   become_method: sudo
   apt: 
     name: "unzip"
-    state: installed 
+    state: present 
   
 - name: Unzip Gradle
   unarchive: src=/home/vagrant/gradle-{{ languages.java.gradle.version }}-bin.zip dest=/usr/local/opt/ creates=yes copy=no

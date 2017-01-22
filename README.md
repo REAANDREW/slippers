@@ -21,3 +21,7 @@ Plugins:
 
 If you are using VIM you still need to run `:GoInstallBinaries` from inside VIM.  Need to find a way how to do this via ansible setup.
 
+### Java
+
+Version 1.8 Open JDK
+

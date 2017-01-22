@@ -1,0 +1,33 @@
+---
+- name: Add gnome-shell ppa repository
+  become: yes
+  become_method: sudo
+  apt_repository: repo="ppa:gnome3-team/gnome3"
+  register: gnome_shell_ppa_state
+
+- name: Add gnome-shell staging ppa repository
+  become: yes
+  become_method: sudo
+  apt_repository: repo="ppa:gnome3-team/gnome3-staging"
+  register: gnome_shell_staging_ppa_state
+
+- name: Ensure packages are up to date
+  become: yes
+  become_method: sudo
+  apt: update_cache=yes upgrade=dist
+  when: gnome_shell_ppa_state|changed or gnome_shell_staging_ppa_state|changed
+
+- name: Install GNOME 3
+  become: yes
+  become_method: sudo
+  apt:
+    name: "gnome-shell"
+    state: installed
+
+- name: Ensure the service is started
+  become: yes
+  become_method: sudo
+  service:
+    name: gdm
+    state: started
+
