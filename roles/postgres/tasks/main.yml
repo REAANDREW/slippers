@@ -1,0 +1,59 @@
+# vim:ft=ansible:
+---
+- name: Add postgres ppa key
+  become: yes
+  become_method: sudo
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    id: ACCC4CF8
+- name: Add postgres sources list
+  become: yes
+  become_method: sudo
+  lineinfile: >
+    line="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
+    dest=/etc/apt/sources.list.d/postgres.list
+    state=present
+    create=yes
+- name: Install postgres
+  become: yes
+  become_method: sudo
+  apt: 
+    name: "{{ item }}"
+    state: installed 
+    update_cache: yes
+  with_items:
+    - python-software-properties
+    - software-properties-common
+    - libpq-dev
+    - python-psycopg2
+    - postgresql-9.4
+
+- name: postgresql should listen on all ports
+  become: yes
+  become_method: sudo
+  lineinfile: dest=/etc/postgresql/9.4/main/postgresql.conf
+              regexp="^listen_addresses"
+              line="listen_addresses = '*'" state=present
+
+- name: postgresql should allow access to host
+  become: yes
+  become_method: sudo
+  copy:
+    dest: /etc/postgresql/9.4/main/pg_hba.conf
+    content: |
+      local   all   postgres   peer
+      local   all   all        peer
+      host    all   all        0.0.0.0/0   md5
+  notify: restart postgresql
+
+- name: ensure database is created
+  become: yes
+  become_user: postgres
+  become_method: sudo
+  postgresql_db: name={{ dbname }}
+
+- name: ensure user has access to database
+  become: yes
+  become_user: postgres
+  become_method: sudo
+  postgresql_user: db={{ dbname }} name={{ dbuser  }} password={{ dbpassword  }} priv=ALL
