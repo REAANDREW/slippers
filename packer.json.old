@@ -1,0 +1,89 @@
+{
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "scripts/ansible.sh"
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "ansible/playbook.yml",
+      "role_paths": [
+        "ansible/roles/ide",
+        "ansible/roles/language",
+        "ansible/roles/mongodb",
+        "ansible/roles/postgres",
+        "ansible/roles/rabbitmq",
+        "ansible/roles/vim",
+        "ansible/roles/virtualbox"
+      ]
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<esc><f6><esc>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs>",
+        "initrd=/install/initrd.gz ",
+        "auto=true ",
+        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-16.10.cfg ",
+        "language=en ",
+        "country=GB ",
+        "locale=en_GB.UTF-8 ",
+        "hostname=base-slippers ",
+        "domain= ",
+        "console-setup/ask_detect=false ",
+        "keyboard-configuration/layoutcode=gb ",
+        "vga=788 noprompt quiet --<enter>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 20480,
+      "guest_os_type": "Ubuntu_64",
+      "headless": false,
+      "http_directory": "http",
+      "iso_urls": [
+        "iso/ubuntu-16.10-server-amd64.iso",
+        "http://releases.ubuntu.com/yakkety/ubuntu-16.10-server-amd64.iso"
+      ],
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "72b0d421da77f1e0c549b4efe6fc6c184e9909d6792f0d1e59b56d63e9705659",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10000s",
+      "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "packer-ubuntu-server-16.10-x86_64",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "512"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "2"
+        ]
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "output": "builds/VirtualBox-ubuntu-server-16.10.box",
+      "type": "vagrant"
+    }
+  ]
+}

@@ -9,9 +9,12 @@
         gradle:
           version: '2.7' 
   roles:
+  - bash
   - vim
-  - language
-  - ide
+  - go
+  #- java
+  #- ide
   - virtualbox
   - mongodb
   - postgres
+  - rabbitmq

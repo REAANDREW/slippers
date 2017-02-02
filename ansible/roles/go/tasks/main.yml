@@ -5,8 +5,4 @@
     when:
     - languages
     - languages.go
-  - include: tasks/java.yml
-    when:
-    - languages
-    - languages.java
 

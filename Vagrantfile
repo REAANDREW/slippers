@@ -9,7 +9,8 @@ Vagrant.configure(2) do |config|
     config.ssh.forward_agent = true
 
     config.vm.provision :ansible do |ansible|
-        ansible.playbook = "playbook.yml"
+        ansible.playbook = "ansible/playbook.yml"
+        ansible.verbose = "vvvv"
     end
 
     config.vm.provider :virtualbox do |vb|

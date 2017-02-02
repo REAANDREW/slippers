@@ -1,0 +1,54 @@
+# vim:ft=ansible:
+---
+- name: Ensure git
+  become: yes
+  become_method: sudo
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - git
+
+- name: Git clone powerline-shell
+  become: yes
+  become_method: sudo
+  git:
+    repo: "https://github.com/banga/powerline-shell.git"
+    dest: "/opt/powerline-shell"
+
+- name: Copy the base configuration
+  become: yes
+  become_method: sudo
+  command: cp /opt/powerline-shell/config.py.dist /opt/powerline-shell/config.py
+  args:
+    chdir: /opt/powerline-shell
+
+- name: Install
+  become: yes
+  become_method: sudo
+  command: ./install.py
+  args:
+    chdir: /opt/powerline-shell
+
+- name: Change ownership to vagrant
+  become: yes
+  become_method: sudo
+  file:
+    path: /opt
+    recurse: yes
+    owner: vagrant
+    group: vagrant
+
+- name: Add bash command to bashrc
+  become: yes
+  become_method: sudo
+  blockinfile:
+    dest: "/home/vagrant/.bashrc"
+    block: |
+       function _update_ps1() {
+            PS1="$(/opt/powerline-shell/powerline-shell.py $? 2> /dev/null)"
+       }
+
+       if [ "$TERM" != "linux" ]; then
+           PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+       fi 
