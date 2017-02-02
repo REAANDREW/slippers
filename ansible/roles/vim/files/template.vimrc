@@ -33,3 +33,5 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 nmap <silent> <C-D> :NERDTreeToggle<CR>
+
+set backspace=indent,eol,start

@@ -86,6 +86,7 @@
     dest: "/home/vagrant/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
   with_items:
     - 'fatih/vim-go'
+    - 'Shougo/neocomplete.vim'
   when:
     - languages
     - languages.go

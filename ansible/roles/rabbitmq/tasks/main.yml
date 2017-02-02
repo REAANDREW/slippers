@@ -26,7 +26,7 @@
   become: yes
   become_method: sudo
   rabbitmq_plugin: names=rabbitmq_management state=enabled
-  notify: restart rabbitmq-server
+  # notify: restart rabbitmq-server
 
 - name: ubuntu | ensuring that the RabbitMQ service is running
   become: yes

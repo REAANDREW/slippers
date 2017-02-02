@@ -30,4 +30,3 @@
 - name: add gimme envs to the bashrc
   lineinfile: dest=/home/vagrant/.bashrc line="source ~/.gimme/envs/go{{ languages.go.version }}.env"
   become: False
-
