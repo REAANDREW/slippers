@@ -35,6 +35,11 @@
               regexp="^listen_addresses"
               line="listen_addresses = '*'" state=present
 
+- name: ubuntu | ensuring that the PostgreSQL service is running
+  become: yes
+  become_method: sudo
+  service: name=postgresql state=started enabled=yes
+
 - name: postgresql should allow access to host
   become: yes
   become_method: sudo

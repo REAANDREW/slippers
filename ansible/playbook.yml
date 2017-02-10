@@ -12,8 +12,8 @@
   - bash
   - vim
   - go
-  #- java
-  #- ide
+  - nodejs
+  - git
   - virtualbox
   - mongodb
   - postgres

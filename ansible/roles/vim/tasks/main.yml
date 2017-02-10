@@ -26,6 +26,7 @@
   - liblua5.1-0-dev
   - libperl-dev
   - git
+  - ctags
 - name: Checkout VIM source
   become: yes
   become_method: sudo
@@ -64,12 +65,13 @@
     - 'nanotech/jellybeans.vim'
     - 'scrooloose/nerdtree'
     - 'tpope/vim-fugitive'
+    - 'majutsushi/tagbar'
+    - 'kristijanhusak/vim-multiple-cursors'
+    - 'vim-airline/vim-airline'
 #   - 'editorconfig/editorconfig-vim' 
 #   - 'scrooloose/syntastic'
 #   - 'Valloric/YouCompleteMe'
-#   - 'majutsushi/tagbar'
 #   - 'tpope/vim-dispatch'
-#   - 'kristijanhusak/vim-multiple-cursors'
 #   - 'airblade/vim-gitgutter'
 - name: vimrc
   copy: src=template.vimrc dest=/home/vagrant/.vimrc owner=vagrant group=vagrant mode=0644
