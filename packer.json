@@ -26,7 +26,8 @@
       "ansible/roles/postgres",
       "ansible/roles/rabbitmq",
       "ansible/roles/vim",
-      "ansible/roles/virtualbox"
+      "ansible/roles/virtualbox",
+      "ansible/roles/nodejs"
     ]
   },
   {

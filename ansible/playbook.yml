@@ -14,7 +14,6 @@
   - go
   - nodejs
   - git
-  - virtualbox
   - mongodb
   - postgres
   - rabbitmq

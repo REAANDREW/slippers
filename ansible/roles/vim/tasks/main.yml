@@ -59,20 +59,32 @@
 - name: Install base plugins
   become: no
   git: 
-    repo: "https://github.com/{{ item }}.git"
-    dest: "/home/vagrant/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
+    repo: "https://github.com/{{ item.org }}/{{ item.repo }}.git"
+    dest: "/home/vagrant/.vim/pack/plugins/start/{{ item.repo }}"
   with_items:
-    - 'nanotech/jellybeans.vim'
-    - 'scrooloose/nerdtree'
-    - 'tpope/vim-fugitive'
-    - 'majutsushi/tagbar'
-    - 'kristijanhusak/vim-multiple-cursors'
-    - 'vim-airline/vim-airline'
-#   - 'editorconfig/editorconfig-vim' 
-#   - 'scrooloose/syntastic'
-#   - 'Valloric/YouCompleteMe'
-#   - 'tpope/vim-dispatch'
-#   - 'airblade/vim-gitgutter'
+    - org: nanotech
+      repo: jellybeans.vim
+    - org: scrooloose
+      repo: nerdtree
+    - org: tpope
+      repo: vim-fugitive
+    - org: majutsushi
+      repo: tagbar
+    - org: kristijanhusak
+      repo: vim-multiple-cursors
+    - org: vim-airline
+      repo: vim-airline
+    #- 'nanotech/jellybeans.vim'
+    #- 'scrooloose/nerdtree'
+    #- 'tpope/vim-fugitive'
+    #- 'majutsushi/tagbar'
+    #- 'kristijanhusak/vim-multiple-cursors'
+    #- 'vim-airline/vim-airline'
+    #- 'editorconfig/editorconfig-vim' 
+    #- 'scrooloose/syntastic'
+    #- 'Valloric/YouCompleteMe'
+    #- 'tpope/vim-dispatch'
+    #- 'airblade/vim-gitgutter'
 - name: vimrc
   copy: src=template.vimrc dest=/home/vagrant/.vimrc owner=vagrant group=vagrant mode=0644
   become: no

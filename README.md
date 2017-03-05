@@ -4,6 +4,10 @@ This is the Development environment which I am comfortable with.  Tried this a n
 
 <strong>NOTE: </strong> This project will not be using the dependency feature of Ansible roles and instead each will be encapsulated even if that means a certain level of duplication.  This way each can work in isolation, you can easily see what each requires and at runtime any dependencies which have already been installed will not be re-installed (unless something is implemented incorrectly)
 
+## Vagrant Plugins
+
+- vagrant-vbguest
+
 
 ## Packer
 

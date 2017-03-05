@@ -1,6 +1,6 @@
 # vim:ft=ansible:
 ---
-- name: Ensure git
+- name: Ensure tools
   become: yes
   become_method: sudo
   apt:
@@ -8,6 +8,8 @@
     state: installed
   with_items:
     - git
+    - silversearcher-ag
+
 
 - name: Git clone powerline-shell
   become: yes
