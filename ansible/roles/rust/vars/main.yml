@@ -1,0 +1,5 @@
+---
+# vars file for rust
+
+rust_download_dir: /opt/rust
+rust_version: 1.16.0

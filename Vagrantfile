@@ -14,8 +14,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision :shell, inline: "sudo apt-get -y install python-simplejson"
 
-  config.vm.provision :ansible do |ansible|
-     ansible.verbose = "vvv"
+  config.vm.provision "ansible_local" do |ansible|
      ansible.playbook = "ansible/playbook.yml"
   end
 

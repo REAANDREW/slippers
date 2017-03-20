@@ -1,13 +1,25 @@
 # vim:ft=ansible:
 ---
-- name: Install Node.js
+- block:
+  - name: Create the directory for the nodejs work
+    file:
+      path: /opt/nodejs
+      state: directory
+      mode: 0755
+  - name: Download primer the package manager for Node.js
+    get_url: 
+      url: http://deb.nodesource.com/setup_6.x
+      dest: /opt/nodejs/setup_6.x
+  - name: Prime the package manager for Node.js
+    command: bash setup_6.x
+    args:
+      chdir: /opt/nodejs
+  - name: Install Node.js
+    apt: 
+      name: "{{ item }}"
+      state: installed 
+      update_cache: yes
+    with_items:
+    - nodejs
   become: yes
   become_method: sudo
-  apt: 
-    name: "{{ item }}"
-    state: installed 
-    update_cache: yes
-  with_items:
-  - nodejs
-  - nodejs-legacy
-  - npm
