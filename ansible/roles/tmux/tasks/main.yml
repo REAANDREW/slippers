@@ -1,0 +1,21 @@
+# vim:ft=ansible:
+---
+- block:
+  - name: Install list of packages
+    apt: 
+      name: "{{ item }}"
+      state: installed 
+      update_cache: yes
+    with_items:
+    - python-pip
+  - name: Ensure GB Locale
+    command: locale-gen "en_GB.UTF-8"
+  - name: Reconfigure GB Locale
+    command: dpkg-reconfigure locales
+  - name: Install Powerline Status
+    pip:
+      name: powerline-status
+  - name: tmux.conf
+    copy: src=tmux.conf dest=/home/vagrant/.tmux.conf owner=vagrant group=vagrant mode=0644
+  become: yes
+  become_method: sudo
