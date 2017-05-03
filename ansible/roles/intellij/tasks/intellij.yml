@@ -1,0 +1,51 @@
+---
+
+#CHECK FOR VARIABLES USING ANSIBLE FAIL & WHEN
+- name: precondition - languages
+  fail: msg="ERROR - required variable 'languages' missing."
+  when: languages is not defined
+
+- name: precondition - languages.java
+  fail: msg="ERROR - required variable 'languages.java' missing."
+  when: languages.java is not defined
+
+- name: precondition - languages.java.version
+  fail: msg="ERROR - required variable 'languages.java.version' missing."
+  when: languages.java.version is not defined
+
+- name: precondition - languages.java.gradle
+  fail: msg="ERROR - required variable 'languages.java.gradle' missing."
+  when: languages.java.gradle is not defined
+
+- name: precondition - languages.java.gradle.version
+  fail: msg="ERROR - required variable 'languages.java.gradle.version' missing."
+  when: languages.java.gradle.version is not defined
+
+- name: Download Intellij
+  get_url: url=https://download.jetbrains.com/idea/ideaIC-2017.1.2-no-jdk.tar.gz dest=/home/vagrant/ideaIC-2017.1.2-no-jdk.tar.gz
+  become: no
+
+- name: Create the directory for IntelliJ
+  file: path=/usr/local/opt state=directory 
+  become: yes
+  become_method: sudo
+
+- name: Install Unzip
+  become: yes
+  become_method: sudo
+  apt: 
+    name: "unzip"
+    state: present 
+  
+- name: Unzip IntelliJ
+  unarchive: src=/home/vagrant/ideaIC-2017.1.2-no-jdk.tar.gz dest=/usr/local/opt/ creates=yes copy=no
+  become: yes
+  become_method: sudo
+
+- name: Add IntelliJ Home
+  lineinfile: dest=/home/vagrant/.bashrc line="export INTELLIJ_HOME=/usr/local/opt/ideaIC-2017.1.2-no-jdk"
+  become: no
+
+- name: Add IntelliJ Home path to bin path
+  lineinfile: dest=/home/vagrant/.bashrc line="export PATH=$PATH:$INTELLIJ_HOME/bin" 
+  become: no

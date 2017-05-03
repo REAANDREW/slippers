@@ -1,4 +1,0 @@
----
-# defaults file for ansible-role-nodejs
-nodejs:
-  version: "v6.9.4"

@@ -1,0 +1,8 @@
+# vim:ft=ansible:
+---
+- block:
+  - include: tasks/intellij.yml
+    when:
+    - languages
+    - languages.java
+
