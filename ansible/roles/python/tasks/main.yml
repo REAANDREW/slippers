@@ -1,0 +1,8 @@
+# vim:ft=ansible:
+---
+- block:
+  - include: tasks/python.yml
+    when:
+    - languages
+    - languages.python
+

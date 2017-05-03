@@ -2,6 +2,7 @@
 - hosts: all
   vars:
     languages:
+      python:
       go: 
         version: '1.7.4'
       java:
@@ -19,3 +20,6 @@
   - rabbitmq
   - rust
   - tmux
+  - python
+  - java
+  - jdauphant.intellij

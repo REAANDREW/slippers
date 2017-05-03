@@ -73,3 +73,5 @@ function! ToggleNERDTreeAndTagbar()
     endfor
 endfunction
 nnoremap <leader>\ :call ToggleNERDTreeAndTagbar()<CR>
+
+let NERDTreeIgnore = ['\.pyc$']

@@ -1,8 +1,7 @@
 ---
 - name: create HOME bin
   file: path=/home/vagrant/bin owner=vagrant group=vagrant state=directory
-  become: no
-
+  become: no 
 - name: download gimme
   get_url: dest=/home/vagrant/bin/gimme url=https://raw.githubusercontent.com/travis-ci/gimme/master/gimme
   become: no
@@ -30,3 +29,26 @@
 - name: add gimme envs to the bashrc
   lineinfile: dest=/home/vagrant/.bashrc line="source ~/.gimme/envs/go{{ languages.go.version }}.env"
   become: False
+
+# create a directory if it doesn't exist
+- name: Create VIM directories
+  file:
+    path: /home/vagrant/.vim/ftplugin/
+    state: directory
+    mode: 0755
+- name: vimrc for GO
+  copy: src=go.vim dest=/home/vagrant/.vim/ftplugin/go.vim owner=vagrant group=vagrant mode=0644
+  become: no
+  when:
+    - languages
+    - languages.go
+- name: vim plugins for GO
+  git: 
+    repo: "https://github.com/{{ item }}.git"
+    dest: "/home/vagrant/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
+  with_items:
+    - 'fatih/vim-go'
+    - 'Shougo/neocomplete.vim'
+  when:
+    - languages
+    - languages.go

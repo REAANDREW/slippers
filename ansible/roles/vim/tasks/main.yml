@@ -88,19 +88,19 @@
 - name: vimrc
   copy: src=template.vimrc dest=/home/vagrant/.vimrc owner=vagrant group=vagrant mode=0644
   become: no
-- name: vimrc for GO
-  copy: src=go.vim dest=/home/vagrant/.vim/ftplugin/go.vim owner=vagrant group=vagrant mode=0644
-  become: no
-  when:
-    - languages
-    - languages.go
-- name: vim plugins for GO
-  git: 
-    repo: "https://github.com/{{ item }}.git"
-    dest: "/home/vagrant/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
-  with_items:
-    - 'fatih/vim-go'
-    - 'Shougo/neocomplete.vim'
-  when:
-    - languages
-    - languages.go
+# - name: vimrc for GO
+#   copy: src=go.vim dest=/home/vagrant/.vim/ftplugin/go.vim owner=vagrant group=vagrant mode=0644
+#   become: no
+#   when:
+#     - languages
+#     - languages.go
+# - name: vim plugins for GO
+#   git: 
+#     repo: "https://github.com/{{ item }}.git"
+#     dest: "/home/vagrant/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
+#   with_items:
+#     - 'fatih/vim-go'
+#     - 'Shougo/neocomplete.vim'
+#   when:
+#     - languages
+#     - languages.go

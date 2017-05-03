@@ -1,6 +1,7 @@
 ---
-- name: ansible-role-nodejs
-  src: https://github.com/LateRoomsGroup/ansible-role-nodejs.git
 - name: debops.logrotate
 - name: debops.ntp
 - name: rvm_io.ruby
+- name: angstwad.docker_ubuntu
+- name: franklinkim.docker-compose
+- name: jdauphant.intellij
