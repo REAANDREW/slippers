@@ -21,10 +21,15 @@
       "ansible/roles/ide",
       "ansible/roles/bash",
       "ansible/roles/go",
+      "ansible/roles/git",
+      "ansible/roles/intellij",
       "ansible/roles/java",
       "ansible/roles/mongodb",
       "ansible/roles/postgres",
+      "ansible/roles/python",
       "ansible/roles/rabbitmq",
+      "ansible/roles/rust",
+      "ansible/roles/tmux",
       "ansible/roles/vim",
       "ansible/roles/virtualbox",
       "ansible/roles/nodejs"
@@ -45,6 +50,7 @@
   "builders": [
   {
       "type": "virtualbox-iso",
+      "headless": true,
       "boot_command": [
         "<esc><wait>",
         "<esc><wait>",
