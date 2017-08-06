@@ -10,20 +10,20 @@
         gradle:
           version: '2.7' 
   roles:
-  # - bash
+   - bash
+   - tmux
   # - vim
   # - go
   # - nodejs
   # - git
-  #  - mongodb
-  #- postgres
-  #- rabbitmq
-  #- rust
-  #- tmux
-  #- python
-  #- terraform
-  #- packer
-  - awscli
-  #- java
-  #- intellij
-  #- gnome
+  # - mongodb
+  # - postgres
+  # - rabbitmq
+  # - rust
+  # - python
+  # - terraform
+  # - packer
+  # - awscli
+  # - java
+  # - intellij
+  # - gnome

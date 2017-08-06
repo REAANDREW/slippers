@@ -1,5 +1,8 @@
 # vim:ft=ansible:
 ---
+- name: .bashrc
+  copy: src=template.bashrc dest=/home/vagrant/.bashrc owner=vagrant group=vagrant mode=0644
+  become: no
 - name: Ensure tools
   become: yes
   become_method: sudo
@@ -9,6 +12,7 @@
   with_items:
     - git
     - silversearcher-ag
+    - imagemagick
 
 
 - name: Git clone powerline-shell
