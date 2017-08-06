@@ -1,0 +1,12 @@
+# vim:ft=ansible:
+---
+- name: Install list of packages
+  become: yes
+  become_method: sudo
+  apt: 
+    name: "{{ item }}"
+    state: installed 
+    update_cache: yes
+  with_items:
+  - gnome-shell
+  - ubuntu-gnome-desktop

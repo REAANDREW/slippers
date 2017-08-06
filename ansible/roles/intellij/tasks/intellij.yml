@@ -22,7 +22,7 @@
   when: languages.java.gradle.version is not defined
 
 - name: Download Intellij
-  get_url: url=https://download.jetbrains.com/idea/ideaIC-2017.1.2-no-jdk.tar.gz dest=/home/vagrant/ideaIC-2017.1.2-no-jdk.tar.gz
+  command: "curl -Lo /home/vagrant/ideaIC-2017.1.2-no-jdk.tar.gz https://download.jetbrains.com/idea/ideaIC-2017.1.2-no-jdk.tar.gz" 
   become: no
 
 - name: Create the directory for IntelliJ

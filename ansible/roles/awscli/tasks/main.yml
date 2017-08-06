@@ -1,0 +1,16 @@
+# vim:ft=ansible:
+---
+- block:
+  - name: Install list of packages
+    apt: 
+      name: "{{ item }}"
+      state: installed 
+      update_cache: yes
+    with_items:
+    - python-pip
+  - name: Install AWS CLI
+    pip:
+      name: awscli
+      extra_args: --upgrade
+  become: yes
+  become_method: sudo

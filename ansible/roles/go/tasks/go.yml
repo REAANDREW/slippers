@@ -3,7 +3,7 @@
   file: path=/home/vagrant/bin owner=vagrant group=vagrant state=directory
   become: no 
 - name: download gimme
-  get_url: dest=/home/vagrant/bin/gimme url=https://raw.githubusercontent.com/travis-ci/gimme/master/gimme
+  command: "curl -o /home/vagrant/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme"
   become: no
 
 - name: make gimme executable

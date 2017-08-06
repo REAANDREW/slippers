@@ -1,0 +1,16 @@
+# vim:ft=ansible:
+---
+- block:
+  - name: Download Terraform
+    command: "curl -o terraform_{{ terraform.version }}_linux_amd64.zip https://releases.hashicorp.com/terraform/{{ terraform.version }}/terraform_0.10.0_linux_amd64.zip"
+    args:
+      chdir: "/usr/local/bin"
+    tags: terraform
+  - name: Uncompress Terraform archive
+    unarchive:
+      src: "/usr/local/bin/terraform_{{ terraform.version }}_linux_amd64.zip"
+      dest: "/usr/local/bin"
+      copy: no
+    tags: terraform
+  become: yes
+  become_method: sudo
