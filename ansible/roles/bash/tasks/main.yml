@@ -13,6 +13,8 @@
     - git
     - silversearcher-ag
     - imagemagick
+    - htop
+    - iftop
 
 
 - name: Git clone powerline-shell
