@@ -15,37 +15,13 @@
     - imagemagick
     - htop
     - iftop
+    - python-pip
 
-
-- name: Git clone powerline-shell
+- name: Install Powerline Status
+  pip:
+    name: powerline-shell
   become: yes
   become_method: sudo
-  git:
-    repo: "https://github.com/banga/powerline-shell.git"
-    dest: "/opt/powerline-shell"
-
-- name: Copy the base configuration
-  become: yes
-  become_method: sudo
-  command: cp /opt/powerline-shell/config.py.dist /opt/powerline-shell/config.py
-  args:
-    chdir: /opt/powerline-shell
-
-- name: Install
-  become: yes
-  become_method: sudo
-  command: ./install.py
-  args:
-    chdir: /opt/powerline-shell
-
-- name: Change ownership to vagrant
-  become: yes
-  become_method: sudo
-  file:
-    path: /opt
-    recurse: yes
-    owner: vagrant
-    group: vagrant
 
 - name: Add bash command to bashrc
   become: yes
@@ -53,10 +29,10 @@
   blockinfile:
     dest: "/home/vagrant/.bashrc"
     block: |
-       function _update_ps1() {
-            PS1="$(/opt/powerline-shell/powerline-shell.py $? 2> /dev/null)"
-       }
+        function _update_ps1() {
+            PS1="$(powerline-shell $?)"
+        }
 
-       if [ "$TERM" != "linux" ]; then
-           PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-       fi 
+        if [ "$TERM" != "linux" ]; then
+            PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+        fi
