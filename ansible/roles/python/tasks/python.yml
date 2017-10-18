@@ -3,11 +3,11 @@
 # create a directory if it doesn't exist
 - name: Create VIM directories
   file:
-    path: /home/vagrant/.vim/ftplugin/
+    path: "/home/{{ os.user }}/.vim/ftplugin/"
     state: directory
     mode: 0755
 - name: vimrc for Python
-  copy: src=python.vim dest=/home/vagrant/.vim/ftplugin/python.vim owner=vagrant group=vagrant mode=0644
+  copy: src=python.vim dest="/home/{{ os.user }}/.vim/ftplugin/python.vim" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
   become: no
   when:
     - languages
@@ -15,7 +15,7 @@
 - name: vim plugins for GO
   git: 
     repo: "https://github.com/{{ item }}.git"
-    dest: "/home/vagrant/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
+    dest: "/home/{{ os.user }}/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
   with_items:
     - 'davidhalter/jedi-vim'
   when:

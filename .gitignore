@@ -7,3 +7,4 @@ iso/
 packer_cache/
 .DS_Store
 *.zip
+*.swp

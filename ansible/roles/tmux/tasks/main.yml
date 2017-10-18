@@ -11,11 +11,11 @@
   - name: Ensure GB Locale
     command: locale-gen "en_GB.UTF-8"
   - name: Reconfigure GB Locale
-    command: dpkg-reconfigure locales
+    command: dpkg-reconfigure -f noninteractive locales
   - name: Install Powerline Status
     pip:
       name: powerline-status
   - name: tmux.conf
-    copy: src=tmux.conf dest=/home/vagrant/.tmux.conf owner=vagrant group=vagrant mode=0644
+    copy: src=tmux.conf dest="/home/{{ os.user }}/.tmux.conf" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
   become: yes
   become_method: sudo

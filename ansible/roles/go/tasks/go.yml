@@ -1,43 +1,43 @@
 ---
 - name: create HOME bin
-  file: path=/home/vagrant/bin owner=vagrant group=vagrant state=directory
+  file: path="/home/{{ os.user }}/bin" owner="{{ os.user }}" group="{{ os.user }}" state=directory
   become: no 
 - name: download gimme
-  command: "curl -o /home/vagrant/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme"
+  command: "curl -o /home/{{ os.user }}/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme"
   become: no
 
 - name: make gimme executable
-  shell: chmod +x /home/vagrant/bin/gimme
+  shell: chmod +x "/home/{{ os.user }}/bin/gimme"
   become: no
 
 - name: Install go via gimme
-  shell: /home/vagrant/bin/gimme {{ languages.go.version }}
+  shell: "/home/{{ os.user }}/bin/gimme {{ languages.go.version }}"
   become: no
 
 - name: create GO HOME
-  file: path=/home/vagrant/go owner=vagrant group=vagrant state=directory
+  file: path="/home/{{ os.user }}/go" owner="{{ os.user }}" group="{{ os.user }}" state=directory
   become: no
 
 - name: add golang PATH
-  lineinfile: dest=/home/vagrant/.bashrc line="export GOPATH=$HOME/go" 
+  lineinfile: dest="/home/{{ os.user }}/.bashrc" line="export GOPATH=$HOME/go" 
   become: no
 
 - name: add golang PATH bin to PATH
-  lineinfile: dest=/home/vagrant/.bashrc line="export PATH=$PATH:$GOPATH/bin" 
+  lineinfile: dest="/home/{{ os.user }}/.bashrc" line="export PATH=$PATH:$GOPATH/bin" 
   become: no
 
 - name: add gimme envs to the bashrc
-  lineinfile: dest=/home/vagrant/.bashrc line="source ~/.gimme/envs/go{{ languages.go.version }}.env"
+  lineinfile: dest="/home/{{ os.user }}/.bashrc" line="source ~/.gimme/envs/go{{ languages.go.version }}.env"
   become: False
 
 # create a directory if it doesn't exist
 - name: Create VIM directories
   file:
-    path: /home/vagrant/.vim/ftplugin/
+    path: "/home/{{ os.user }}/.vim/ftplugin/"
     state: directory
     mode: 0755
 - name: vimrc for GO
-  copy: src=go.vim dest=/home/vagrant/.vim/ftplugin/go.vim owner=vagrant group=vagrant mode=0644
+  copy: src=go.vim dest="/home/{{ os.user }}/.vim/ftplugin/go.vim" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
   become: no
   when:
     - languages
@@ -45,7 +45,7 @@
 - name: vim plugins for GO
   git: 
     repo: "https://github.com/{{ item }}.git"
-    dest: "/home/vagrant/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
+    dest: "/home/{{ os.user }}/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
   with_items:
     - 'fatih/vim-go'
     - 'Shougo/neocomplete.vim'

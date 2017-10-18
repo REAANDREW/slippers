@@ -8,10 +8,10 @@
       mode: 0755
   - name: Download primer the package manager for Node.js
     get_url: 
-      url: http://deb.nodesource.com/setup_6.x
-      dest: /opt/nodejs/setup_6.x
+      url: http://deb.nodesource.com/setup_8.x
+      dest: /opt/nodejs/setup_8.x
   - name: Prime the package manager for Node.js
-    command: bash setup_6.x
+    command: bash setup_8.x
     args:
       chdir: /opt/nodejs
   - name: Install Node.js
@@ -21,5 +21,13 @@
       update_cache: yes
     with_items:
     - nodejs
+  - name: Install base plugins
+    become: no
+    git: 
+      repo: "https://github.com/{{ item.org }}/{{ item.repo }}.git"
+      dest: "/home/{{ os.user }}/.vim/pack/plugins/start/{{ item.repo }}"
+    with_items:
+      - org: pangloss
+        repo: vim-javascript
   become: yes
   become_method: sudo

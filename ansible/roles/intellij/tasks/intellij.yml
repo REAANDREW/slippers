@@ -22,7 +22,7 @@
   when: languages.java.gradle.version is not defined
 
 - name: Download Intellij
-  command: "curl -Lo /home/vagrant/ideaIC-2017.1.2-no-jdk.tar.gz https://download.jetbrains.com/idea/ideaIC-2017.1.2-no-jdk.tar.gz" 
+  command: "curl -Lo /home/{{ os.user }}/ideaIC-2017.1.2-no-jdk.tar.gz https://download.jetbrains.com/idea/ideaIC-2017.1.2-no-jdk.tar.gz" 
   become: no
 
 - name: Create the directory for IntelliJ
@@ -38,14 +38,14 @@
     state: present 
   
 - name: Unzip IntelliJ
-  unarchive: src=/home/vagrant/ideaIC-2017.1.2-no-jdk.tar.gz dest=/usr/local/opt/ creates=yes copy=no
+  unarchive: src="/home/{{ os.user }}/ideaIC-2017.1.2-no-jdk.tar.gz" dest=/usr/local/opt/ creates=yes copy=no
   become: yes
   become_method: sudo
 
 - name: Add IntelliJ Home
-  lineinfile: dest=/home/vagrant/.bashrc line="export INTELLIJ_HOME=/usr/local/opt/ideaIC-2017.1.2-no-jdk"
+  lineinfile: dest="/home/{{ os.user }}/.bashrc" line="export INTELLIJ_HOME=/usr/local/opt/ideaIC-2017.1.2-no-jdk"
   become: no
 
 - name: Add IntelliJ Home path to bin path
-  lineinfile: dest=/home/vagrant/.bashrc line="export PATH=$PATH:$INTELLIJ_HOME/bin" 
+  lineinfile: dest="/home/{{ os.user }}/.bashrc" line="export PATH=$PATH:$INTELLIJ_HOME/bin" 
   become: no

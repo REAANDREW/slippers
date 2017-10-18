@@ -1,7 +1,7 @@
 # vim:ft=ansible:
 ---
 - name: .bashrc
-  copy: src=template.bashrc dest=/home/vagrant/.bashrc owner=vagrant group=vagrant mode=0644
+  copy: src=template.bashrc dest="/home/{{ os.user  }}/.bashrc" owner="{{ os.user  }}" group="{{ os.user  }}" mode=0644
   become: no
 - name: Ensure tools
   become: yes
@@ -27,7 +27,7 @@
   become: yes
   become_method: sudo
   blockinfile:
-    dest: "/home/vagrant/.bashrc"
+    dest: "/home/{{ os.user  }}/.bashrc"
     block: |
         function _update_ps1() {
             PS1="$(powerline-shell $?)"

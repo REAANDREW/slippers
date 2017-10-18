@@ -10,5 +10,5 @@
   with_items:
   - git
 - name: gitconfig
-  copy: src=template.gitconfig dest=/home/vagrant/.gitconfig owner=vagrant group=vagrant mode=0644
+  copy: src=template.gitconfig dest="/home/{{ os.user }}/.gitconfig" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
   become: no
