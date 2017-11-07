@@ -7,7 +7,7 @@
 # you're doing.
 Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/xenial64"
-  config.vm.box_version = "20171011.0.0"
+  config.vm.box_version = "20171028.0.0"
   config.ssh.username = "ubuntu"
   config.ssh.forward_agent = true
   config.vm.network       "private_network", ip: "192.168.99.45"
@@ -26,6 +26,8 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provider 'virtualbox' do |vb|
+
+    vb.name = "slippers"
     # Display the VirtualBox GUI when booting the machine
     vb.gui = false
   
@@ -33,7 +35,7 @@ Vagrant.configure(2) do |config|
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     vb.memory = "4096"
-    vb.cpus = 2
+    vb.cpus = 4
     vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 1000 ]
   end
 
