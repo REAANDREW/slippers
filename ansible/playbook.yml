@@ -2,7 +2,7 @@
 - hosts: all
   vars:
     os:
-      user: ubuntu
+      user: vagrant
     languages:
       python:
       go: 
@@ -10,22 +10,18 @@
       java:
         version: '8'
         gradle:
-          version: '2.7' 
+          version: '4.3' 
   roles:
-   - bash
+   - docker
+   - zsh
    - tmux
    - vim
    - go
    - nodejs
    - git
-  # - mongodb
-  # - postgres
-  # - rabbitmq
-  # - rust
-  # - python
-  # - terraform
-  # - packer
-  # - awscli
-  # - java
-  # - intellij
-  # - gnome
+   - java
+   - python
+   - terraform
+   - packer
+   - awscli
+   - gcloud

@@ -30,6 +30,18 @@
   lineinfile: dest="/home/{{ os.user }}/.bashrc" line="source ~/.gimme/envs/go{{ languages.go.version }}.env"
   become: False
 
+- name: add golang PATH zsh
+  lineinfile: dest="/home/{{ os.user }}/.zshrc" line="export GOPATH=$HOME/go" 
+  become: no
+
+- name: add golang PATH bin to PATH zsh
+  lineinfile: dest="/home/{{ os.user }}/.zshrc" line="export PATH=$PATH:$GOPATH/bin" 
+  become: no
+
+- name: add gimme envs to the zshrc
+  lineinfile: dest="/home/{{ os.user }}/.zshrc" line="source ~/.gimme/envs/go{{ languages.go.version }}.env"
+  become: False
+
 # create a directory if it doesn't exist
 - name: Create VIM directories
   file:

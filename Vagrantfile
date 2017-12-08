@@ -6,16 +6,9 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/xenial64"
-  config.vm.box_version = "20171028.0.0"
-  config.ssh.username = "ubuntu"
+  config.vm.box = "bento/ubuntu-16.04"
   config.ssh.forward_agent = true
   config.vm.network       "private_network", ip: "192.168.99.45"
-  config.vm.network       "forwarded_port", guest: 9000, host: 9000 
-  config.vm.network       "forwarded_port", guest: 8000, host: 8000 
-  config.vm.network       "forwarded_port", guest: 4567, host: 4567 
-  config.vm.network       "forwarded_port", guest: 3000, host: 3000
-  config.vm.network       "forwarded_port", guest: 3001, host: 3001
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 
   config.vm.provision :shell, inline: "sudo apt-get -y install python-simplejson"
@@ -33,7 +26,7 @@ Vagrant.configure(2) do |config|
   
     # Customize the amount of memory on the VM:
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
     vb.memory = "4096"
     vb.cpus = 4
     vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 1000 ]

@@ -1,0 +1,42 @@
+# vim:ft=ansible:
+---
+- block:
+  - name: Uninstall old versions
+    apt:
+      name: "{{ item }}"
+      state: absent
+      update_cache: yes
+    with_items:
+      - docker
+      - docker-engine
+      - docker-io
+  - name: Install linux headers
+    apt:
+      name: "{{ item }}"
+      state: present
+      update_cache: yes
+    with_items:
+      - linux-image-extra-4.4.0-87-generic
+      - linux-image-extra-virtual
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+  - name: Import Docker CE repository gpg key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+      id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+  - name: 
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+      state: present
+  - name: Install Docker
+    apt:
+      name: "{{ item }}"
+      state: present
+      update_cache: yes
+    with_items:
+      - docker-ce
+  become: yes
+  become_method: sudo

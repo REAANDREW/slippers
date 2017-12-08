@@ -1,0 +1,40 @@
+---
+- name: Installing Zsh and git
+  apt: pkg=zsh,git state=latest
+  register: installation
+  become: yes
+  become_method: sudo
+
+- name: Cloning  oh-my-zsh
+  git:
+    repo=https://github.com/robbyrussell/oh-my-zsh
+    dest=~/.oh-my-zsh
+  when: installation|success
+  register: cloning
+  become: no
+
+- name: .zshrc
+  copy: src=template.zshrc dest="/home/{{ os.user  }}/.zshrc" owner="{{ os.user  }}" group="{{ os.user  }}" mode=0644
+  when: installation|success
+  become: no
+
+- name: add POWERLINE to zsh
+  lineinfile: 
+    dest: "/home/{{ os.user }}/.zshrc"
+    line: |
+      export POWERLINE_ROOT=$(pip show powerline-status | grep Location | cut -d: -f2 | tr -d " ")
+  become: no
+
+- name: source POWERLINE in zsh
+  lineinfile:
+    dest: "/home/{{ os.user }}/.zshrc"
+    line: |
+      . ${POWERLINE_ROOT}/powerline/bindings/zsh/powerline.zsh
+  become: no
+
+- name: Set zsh as default shell
+  user: 
+    name: "{{ os.user }}"
+    shell: /bin/zsh
+  become: yes
+  become_method: sudo

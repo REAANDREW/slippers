@@ -1,0 +1,18 @@
+# vim:ft=ansible:
+---
+- block:
+  - name: Download GCloud SDK
+    get_url:
+      url: https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-182.0.0-linux-x86_64.tar.gz
+      dest: /opt/
+  - name: Extract GCloud SDK
+    unarchive:
+      src: /opt/google-cloud-sdk-182.0.0-linux-x86_64.tar.gz
+      dest: /opt
+  - name: add GCloud PATH zsh
+    lineinfile: dest="/home/{{ os.user }}/.zshrc" line="export PATH=/opt/google-cloud-sdk/bin:$PATH" 
+    become: no
+  - name: Change the working directory to somedir/ before executing the command.
+    shell: /opt/google-cloud-sdk/install.sh
+  become: yes
+  become_method: sudo

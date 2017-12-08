@@ -27,13 +27,23 @@
   apt_repository:
     repo: 'ppa:openjdk-r/ppa'
 
-- name: JDK
+- name: Oracle JDK Repository
   become: yes
   become_method: sudo
-  apt: 
-    update_cache: yes
-    name: "openjdk-{{ languages.java.version  }}-jdk"
-    state: installed 
+  apt_repository:
+    repo: 'ppa:webupd8team/java'
+
+- name: Accept Java 8 License
+  become: yes
+  debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
+- name: Install Oracle Java 8
+  become: yes
+  apt: name={{item}} state=latest
+  with_items:
+    - oracle-java8-installer
+    - ca-certificates
+    - oracle-java8-set-default
   
 - name: Add JAVA Home
   lineinfile: dest="/home/{{ os.user  }}/.bashrc" line="export JAVA_HOME=/usr/lib/jvm/java-{{ languages.java.version  }}-openjdk-amd64" 
@@ -43,8 +53,16 @@
   lineinfile: dest="/home/{{ os.user }}/.bashrc" line="export PATH=$PATH:$JAVA_HOME/bin"
   become: no
 
+- name: Add JAVA Home ZSH
+  lineinfile: dest="/home/{{ os.user  }}/.zshrc" line="export JAVA_HOME=/usr/lib/jvm/java-{{ languages.java.version  }}-openjdk-amd64" 
+  become: no
+
+- name: Add Java Home path to bin path ZSH
+  lineinfile: dest="/home/{{ os.user }}/.zshrc" line="export PATH=$PATH:$JAVA_HOME/bin"
+  become: no
+
 - name: Download Gradle
-  get_url: url=https://services.gradle.org/distributions/gradle-{{ languages.java.gradle.version }}-bin.zip dest="/home/{{ os.user }}/gradle-{{ languages.java.gradle.version }}-bin.zip"
+  get_url: url=https://services.gradle.org/distributions/gradle-{{ languages.java.gradle.version }}-bin.zip dest="/home/{{ os.user }}/gradle-{{ languages.java.gradle.version }}-bin.zip" dest="/home/{{ os.user }}/gradle-{{ languages.java.gradle.version }}-bin.zip"
   become: no
 
 - name: Create the directory for Gradle
@@ -60,7 +78,7 @@
     state: present 
   
 - name: Unzip Gradle
-  unarchive: src="/home/{{ os.user }}/gradle-{{ languages.java.gradle.version }}-bin.zip dest=/usr/local/opt/" creates=yes copy=no
+  unarchive: src="/home/{{ os.user }}/gradle-{{ languages.java.gradle.version }}-bin.zip" dest="/usr/local/opt/" creates=yes copy=no
   become: yes
   become_method: sudo
 
@@ -70,4 +88,12 @@
 
 - name: Add Gradle Home path to bin path
   lineinfile: dest="/home/{{ os.user  }}/.bashrc" line="export PATH=$PATH:$GRADLE_HOME/bin" 
+  become: no
+
+- name: Add Gradle Home ZSH
+  lineinfile: dest="/home/{{ os.user }}/.zshrc" line="export GRADLE_HOME=/usr/local/opt/gradle-{{ languages.java.gradle.version  }}"
+  become: no
+
+- name: Add Gradle Home path to bin path ZSH
+  lineinfile: dest="/home/{{ os.user  }}/.zshrc" line="export PATH=$PATH:$GRADLE_HOME/bin" 
   become: no
