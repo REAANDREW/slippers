@@ -8,10 +8,10 @@
       mode: 0755
   - name: Download primer the package manager for Node.js
     get_url: 
-      url: http://deb.nodesource.com/setup_8.x
-      dest: /opt/nodejs/setup_8.x
+      url: http://deb.nodesource.com/setup_6.x
+      dest: /opt/nodejs/setup_6.x
   - name: Prime the package manager for Node.js
-    command: bash setup_8.x
+    command: bash setup_6.x
     args:
       chdir: /opt/nodejs
   - name: Install Node.js
@@ -21,6 +21,12 @@
       update_cache: yes
     with_items:
     - nodejs
+  - name: Install node.js packages globally.
+    npm:
+      name: "{{ item }}"
+      global: yes
+    with_items:
+    - eslint
   - name: Install base plugins
     become: no
     git: 
@@ -29,5 +35,15 @@
     with_items:
       - org: pangloss
         repo: vim-javascript
+      - org: ternjs
+        repo: tern_for_vim
+  - name: Configure Tern
+    become: no
+    shell: |
+      npm install 
+      chdir=/home/vagrant/.vim/pack/plugins/start/tern_for_vim
+  - name: vimrc for JAVASCRIPT
+    copy: src=javascript.vim dest="/home/{{ os.user }}/.vim/ftplugin/javascript.vim" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
+    become: no
   become: yes
   become_method: sudo

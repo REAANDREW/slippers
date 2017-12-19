@@ -14,5 +14,8 @@
     become: no
   - name: Change the working directory to somedir/ before executing the command.
     shell: /opt/google-cloud-sdk/install.sh
+  - name: add gcloud command
+    lineinfile: dest="/home/{{ os.user }}/.zshrc" line='export G_PROJECT_ID="$(gcloud config get-value project -q)"'
+    become: no
   become: yes
   become_method: sudo

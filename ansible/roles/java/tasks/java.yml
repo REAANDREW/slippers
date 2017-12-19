@@ -97,3 +97,12 @@
 - name: Add Gradle Home path to bin path ZSH
   lineinfile: dest="/home/{{ os.user  }}/.zshrc" line="export PATH=$PATH:$GRADLE_HOME/bin" 
   become: no
+
+# create a directory if it doesn't exist
+- name: Create VIM directories
+  file:
+    path: "/home/{{ os.user }}/.vim/ftplugin/"
+    state: directory
+    mode: 0755
+- name: vimrc for JAVA
+  copy: src=java.vim dest="/home/{{ os.user }}/.vim/ftplugin/java.vim" owner="{{ os.user }}" group="{{ os.user }}" mode=0644

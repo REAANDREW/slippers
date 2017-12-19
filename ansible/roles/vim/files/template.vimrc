@@ -1,6 +1,7 @@
 set nocompatible | syn on
 filetype off
 syntax on
+filetype plugin on
 filetype plugin indent on
 
 set t_Co=256
@@ -83,3 +84,8 @@ let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
+
+" Indent Guides
+let g:indent_guides_enable_on_vim_startup = 1
+
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
