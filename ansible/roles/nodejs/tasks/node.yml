@@ -26,7 +26,18 @@
       name: "{{ item }}"
       global: yes
     with_items:
+    - js-beautify
+    - mocha
     - eslint
+    - eslint_d
+    - eslint-plugin-babel
+    - eslint-config-airbnb
+    - eslint-plugin-import
+    - eslint-plugin-jsx-a11y
+    - eslint-plugin-react    
+    - eslint-plugin-mocha  
+    - babel-eslint
+    - import-js
   - name: Install base plugins
     become: no
     git: 
@@ -37,6 +48,10 @@
         repo: vim-javascript
       - org: ternjs
         repo: tern_for_vim
+      - org: ruanyl
+        repo: vim-fixmyjs
+      - org: Galooshi
+        repo: vim-import-js
   - name: Configure Tern
     become: no
     shell: |
@@ -44,6 +59,12 @@
       chdir=/home/vagrant/.vim/pack/plugins/start/tern_for_vim
   - name: vimrc for JAVASCRIPT
     copy: src=javascript.vim dest="/home/{{ os.user }}/.vim/ftplugin/javascript.vim" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
+    become: no
+  - name: eslintrc for JAVASCRIPT
+    copy: src=template.eslintrc dest="/home/{{ os.user }}/.eslintrc" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
+    become: no
+  - name: importjs for JAVASCRIPT
+    copy: src=template.importjs.js dest="/home/{{ os.user }}/.importjs.js" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
     become: no
   become: yes
   become_method: sudo
