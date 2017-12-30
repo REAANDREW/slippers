@@ -89,3 +89,5 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:indent_guides_enable_on_vim_startup = 1
 
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+call gitgutter#line_highlights_enable()

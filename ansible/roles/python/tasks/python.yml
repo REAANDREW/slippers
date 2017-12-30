@@ -12,12 +12,16 @@
   when:
     - languages
     - languages.python
-- name: vim plugins for GO
-  git: 
-    repo: "https://github.com/{{ item }}.git"
-    dest: "/home/{{ os.user }}/.vim/pack/plugins/start/{{ item|replace('/', '_') }}"
-  with_items:
-    - 'davidhalter/jedi-vim'
+- name: pylintrc for Python
+  copy: src=pylintrc dest="/home/{{ os.user }}/.pylintrc" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
+  become: no
   when:
     - languages
     - languages.python
+- name: Python Packages
+  pip:
+    name: "{{ item  }}"
+  with_items:
+    - pylint
+    - autopep8
+    - python-nose2

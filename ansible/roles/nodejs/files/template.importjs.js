@@ -6,6 +6,5 @@ module.exports = {
   excludes: [
     './build/**',
     './lib/__mocks__/**',
-  ],
-  importDevDependencies: ({ pathToCurrentFile }) => testFilePattern.test(pathToCurrentFile),
+  ]
 };

@@ -102,8 +102,17 @@
       repo: YouCompleteMe
     - org: vim-syntastic
       repo: syntastic
+    - org: editorconfig
+      repo: editorconfig-vim
+    - org: janko-m
+      repo: vim-test
+    - org: tpope
+      repo: vim-dispatch
 - name: vimrc
   copy: src=template.vimrc dest="/home/{{ os.user }}/.vimrc" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
+  become: no
+- name: editor config
+  copy: src=template.editorconfig dest="/home/{{ os.user }}/.editorconfig" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
   become: no
 - name: Configure YouCompleteMe
   become: yes

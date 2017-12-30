@@ -66,5 +66,8 @@
   - name: importjs for JAVASCRIPT
     copy: src=template.importjs.js dest="/home/{{ os.user }}/.importjs.js" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
     become: no
+    - name: tern-config for JAVASCRIPT
+      copy: src=template.tern-config.js dest="/home/{{ os.user }}/.tern-config.js" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
+    become: no
   become: yes
   become_method: sudo
