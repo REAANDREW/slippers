@@ -11,6 +11,7 @@
     with_items:
     - python-pip
     - locales
+    - tmux
   - name: Reconfigure GB Locale
     command: dpkg-reconfigure -f noninteractive locales
 # - name: Ensure GB Locale
