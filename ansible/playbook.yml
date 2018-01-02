@@ -2,7 +2,7 @@
 - hosts: all
   vars:
     os:
-      user: vagrant
+      user: ubuntu
     languages:
       python:
       go: 
