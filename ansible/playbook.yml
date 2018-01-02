@@ -12,16 +12,16 @@
         gradle:
           version: '4.3' 
   roles:
-   - docker
-   - zsh
+#  - docker
+#  - zsh
    - tmux
-   - vim
-   - go
-   - nodejs
-   - git
-   - java
-   - python
-   - terraform
-   - packer
-   - awscli
-   - gcloud
+#  - vim
+#  - go
+#  - nodejs
+#  - git
+#  - java
+#  - python
+#  - terraform
+#  - packer
+#  - awscli
+#  - gcloud

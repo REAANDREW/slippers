@@ -1,104 +1,49 @@
 {
-  "provisioners": [
-  {
-    "type": "shell",
-    "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'",
-    "override": {
-      "virtualbox-iso": {
-        "scripts": [
-          "scripts/base.sh",
-          "scripts/vagrant.sh",
-          "scripts/ansible.sh",
-          "scripts/zerodisk.sh"
-        ]
-      }
-    }
+  "variables": {
+    "ansible_host": "default",
+    "ansible_connection": "docker"
   },
-  {
-    "type": "ansible-local",
-    "playbook_file": "ansible/playbook.yml",
-    "role_paths": [
-      "ansible/roles/ide",
-      "ansible/roles/bash",
-      "ansible/roles/go",
-      "ansible/roles/git",
-      "ansible/roles/intellij",
-      "ansible/roles/java",
-      "ansible/roles/mongodb",
-      "ansible/roles/postgres",
-      "ansible/roles/python",
-      "ansible/roles/rabbitmq",
-      "ansible/roles/rust",
-      "ansible/roles/tmux",
-      "ansible/roles/vim",
-      "ansible/roles/virtualbox",
-      "ansible/roles/nodejs"
-    ]
-  },
-  {
-    "type": "shell",
-    "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'",
-    "override": {
-      "virtualbox-iso": {
-        "scripts": [
-          "scripts/cleanup.sh"
-        ]
-      }
-    }
-  }
-  ],
   "builders": [
-  {
-      "type": "virtualbox-iso",
-      "headless": true,
-      "boot_command": [
-        "<esc><wait>",
-        "<esc><wait>",
-        "<enter><wait>",
-        "/install/vmlinuz<wait>",
-        " auto<wait>",
-        " console-setup/ask_detect=false<wait>",
-        " console-setup/layoutcode=gb<wait>",
-        " console-setup/modelcode=pc105<wait>",
-        " debian-installer=en_GB<wait>",
-        " fb=false<wait>",
-        " initrd=/install/initrd.gz<wait>",
-        " kbd-chooser/method=gb<wait>",
-        " keyboard-configuration/layout=GB<wait>",
-        " keyboard-configuration/variant=GB<wait>",
-        " locale=en_GB<wait>",
-        " netcfg/get_hostname=ubuntu-1610<wait>",
-        " netcfg/get_domain=vagrantup.com<wait>",
-        " noapic<wait>",
-        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<wait>",
-        " -- <wait>",
-        "<enter><wait>"
-      ],
-      "boot_wait": "10s",
-      "disk_size": 40960,
-      "guest_os_type": "Ubuntu_64",
-      "http_directory": "http",
-      "iso_urls": [
-        "iso/ubuntu-16.10-server-amd64.iso",
-        "http://releases.ubuntu.com/yakkety/ubuntu-16.10-server-amd64.iso"
-      ],
-      "iso_checksum_type": "sha256",
-      "iso_checksum": "72b0d421da77f1e0c549b4efe6fc6c184e9909d6792f0d1e59b56d63e9705659",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_port": 22,
-      "ssh_wait_timeout": "10000s",
-      "shutdown_command": "echo 'shutdown -P now' > /tmp/shutdown.sh; echo 'vagrant'|sudo -S sh '/tmp/shutdown.sh'",
-      "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--memory", "512" ],
-        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+    {
+      "type": "docker",
+      "image": "ubuntu:16.04",
+      "commit": "true",
+      "run_command": [
+        "-d",
+        "-i",
+        "-t",
+        "--name",
+        "{{user `ansible_host`}}",
+        "{{.Image}}",
+        "/bin/bash"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "apt-get update",
+        "apt-get install python -yq"
+      ]
+    },
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "./ansible/playbook.yml",
+      "extra_arguments": [
+        "--extra-vars",
+        "ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}"
       ]
     }
   ],
   "post-processors": [
-    {
-      "output": "builds/VirtualBox-ubuntu-server-16.10.box",
-      "type": "vagrant"
-    }
+    [
+      {
+        "type": "docker-tag",
+        "repository": "jamescarr/demo",
+        "tag": "0.1"
+      }
+    ]
   ]
 }
