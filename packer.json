@@ -25,6 +25,7 @@
       "inline": [
         "apt-get update",
         "apt-get install python -yq",
+        "apt-get install -y sudo && rm -rf /var/lib/apt/lists/*",
         "adduser --disabled-password --gecos '' ubuntu",
         "usermod -aG sudo ubuntu"
       ]
@@ -43,7 +44,7 @@
     [
       {
         "type": "docker-tag",
-        "repository": "jamescarr/demo",
+        "repository": "reaandrew/devenv",
         "tag": "0.1"
       }
     ]
