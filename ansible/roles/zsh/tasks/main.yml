@@ -36,7 +36,7 @@
   become: yes
   become_method: sudo
   shell: |
-    bash -c 'chsh ubuntu -s /bin/zsh'
+    bash -c 'chsh talula -s /bin/zsh'
 
 # - name: Set zsh as default shell
 #   user: 

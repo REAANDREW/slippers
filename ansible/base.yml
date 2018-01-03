@@ -2,7 +2,7 @@
 - hosts: all
   vars:
     os:
-      user: ubuntu
+      user: talula
     languages:
       python:
   roles:

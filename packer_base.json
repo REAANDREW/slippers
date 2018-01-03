@@ -29,10 +29,10 @@
         "apk add bash",
         "apk add py-pip",
         "apk --update add curl tar zip unzip shadow && curl -Ls https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.25-r0/glibc-2.25-r0.apk > /tmp/glibc-2.25-r0.apk && apk add --allow-untrusted /tmp/glibc-2.25-r0.apk",
-        "addgroup ubuntu",
-        "adduser -D -G ubuntu ubuntu",
-        "echo 'ubuntu:ubuntu' | chpasswd",
-        "echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers"
+        "addgroup talula",
+        "adduser -D -G talula talula",
+        "echo 'talula:talula' | chpasswd",
+        "echo 'talula ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers"
       ]
     },
     {
@@ -49,8 +49,7 @@
     [
       {
         "type": "docker-tag",
-        "repository": "reaandrew/devenv",
-        "tag": "0.1"
+        "repository": "reaandrew/devenv_base"
       }
     ]
   ]

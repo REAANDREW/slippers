@@ -11,14 +11,19 @@
   - g++
   - make
   - gcc
+  - gawk
+  - ncurses-dev
   - ncurses-libs
+  - python
   - python-dev 
+  - ruby
   - ruby-dev
   - lua5.1
   - lua5.1-dev
+  - perl
   - perl-dev
   - luajit
-  - libluajit-dev
+  - luajit-dev
   - git
   - ctags
   - cmake
@@ -36,7 +41,7 @@
     --enable-multibyte \
     --enable-perlinterp=yes \
     --enable-rubyinterp=yes \
-    --with-ruby-command=/usr/local/bin/ruby \
+    --with-ruby-command=/usr/bin/ruby \
     --enable-pythoninterp=yes \
     --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
     --enable-luainterp=yes \
@@ -110,9 +115,9 @@
   become_method: sudo
   shell: |
     ./install.py 
-    chdir=/home/ubuntu/.vim/pack/plugins/start/YouCompleteMe
+    chdir=/home/talula/.vim/pack/plugins/start/YouCompleteMe
 - name: Delete All the .git directories
   become: no
   shell: |
-    cd /home/ubuntu/.vim/pack/plugins/start/
+    cd /home/talula/.vim/pack/plugins/start/
     find -type d -name .git | xargs rm -r
