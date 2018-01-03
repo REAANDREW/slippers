@@ -35,3 +35,8 @@ If you are using VIM you still need to run `:GoInstallBinaries` from inside VIM.
 
 Version 1.8 Open JDK
 
+
+### References
+
+https://hub.docker.com/r/oddpoet/alpine-base/~/dockerfile/
+https://blog.james-carr.org/build-docker-images-with-packer-and-ansible-3f40b734ef4f

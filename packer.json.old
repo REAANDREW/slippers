@@ -24,14 +24,11 @@
       "type": "shell",
       "inline": [
         "apk update",
-        "apk add python",
-        "apk add sudo",
-        "apk add bash",
-        "apk add py-pip",
-        "apk --update add curl tar zip unzip shadow && curl -Ls https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.25-r0/glibc-2.25-r0.apk > /tmp/glibc-2.25-r0.apk && apk add --allow-untrusted /tmp/glibc-2.25-r0.apk",
-        "addgroup ubuntu",
-        "adduser -D -G ubuntu ubuntu",
+        "apk install python -yq",
+        "apk install -y sudo && rm -rf /var/lib/apt/lists/*",
+        "adduser --disabled-password --gecos '' ubuntu",
         "echo 'ubuntu:ubuntu' | chpasswd",
+        "usermod -aG sudo ubuntu",
         "echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers"
       ]
     },

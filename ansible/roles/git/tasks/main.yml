@@ -3,7 +3,7 @@
 - name: Install list of packages
   become: yes
   become_method: sudo
-  apt: 
+  apk: 
     name: "{{ item }}"
     state: installed 
     update_cache: yes

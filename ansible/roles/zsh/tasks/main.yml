@@ -1,6 +1,6 @@
 ---
 - name: Installing Zsh and git
-  apt: pkg=zsh,git state=latest
+  apk: name=zsh,git state=latest
   register: installation
   become: yes
   become_method: sudo
@@ -33,8 +33,15 @@
   become: no
 
 - name: Set zsh as default shell
-  user: 
-    name: "{{ os.user }}"
-    shell: /bin/zsh
   become: yes
   become_method: sudo
+  shell: |
+    bash -c 'chsh ubuntu -s /bin/zsh'
+
+# - name: Set zsh as default shell
+#   user: 
+#     name: "{{ os.user }}"
+#     shell: /bin/zsh
+#   become: yes
+#   become_method: sudo
+

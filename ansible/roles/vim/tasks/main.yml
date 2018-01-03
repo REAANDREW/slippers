@@ -3,33 +3,33 @@
 - name: Install list of packages
   become: yes
   become_method: sudo
-  apt: 
+  apk: 
     name: "{{ item }}"
     state: installed 
     update_cache: yes
   with_items:
-  - build-essential
-  - libncurses5-dev
-  - libgnome2-dev
-  - libgnomeui-dev 
-  - libgtk2.0-dev
-  - libatk1.0-dev
-  - libbonoboui2-dev 
-  - libcairo2-dev
-  - libx11-dev
-  - libxpm-dev
-  - libxt-dev
-  - python-dev 
-  - python3-dev
-  - ruby-dev
-  - lua5.1
-  - liblua5.1-dev
-  - libperl-dev
-  - luajit
-  - libluajit-5.1-dev
-  - git
-  - ctags
-  - cmake
+  - alpine-sdk
+# - libncurses5-dev
+# - libgnome2-dev
+# - libgnomeui-dev 
+# - libgtk2.0-dev
+# - libatk1.0-dev
+# - libbonoboui2-dev 
+# - libcairo2-dev
+# - libx11-dev
+# - libxpm-dev
+# - libxt-dev
+# - python-dev 
+# - python3-dev
+# - ruby-dev
+# - lua5.1
+# - liblua5.1-dev
+# - libperl-dev
+# - luajit
+# - libluajit-5.1-dev
+# - git
+# - ctags
+# - cmake
 - name: Checkout VIM source
   become: yes
   become_method: sudo
@@ -75,6 +75,7 @@
   git: 
     repo: "https://github.com/{{ item.org }}/{{ item.repo }}.git"
     dest: "/home/{{ os.user }}/.vim/pack/plugins/start/{{ item.repo }}"
+    depth: 1
   with_items:
     - org: nanotech
       repo: jellybeans.vim
@@ -118,5 +119,10 @@
   become: yes
   become_method: sudo
   shell: |
-    ./install.py --clang-completer
-    chdir=/home/vagrant/.vim/pack/plugins/start/YouCompleteMe
+    ./install.py 
+    chdir=/home/ubuntu/.vim/pack/plugins/start/YouCompleteMe
+- name: Delete All the .git directories
+  become: no
+  shell: |
+    cd /home/ubuntu/.vim/pack/plugins/start/
+    find -type d -name .git | xargs rm -r

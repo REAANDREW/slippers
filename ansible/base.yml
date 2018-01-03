@@ -5,20 +5,13 @@
       user: ubuntu
     languages:
       python:
-      go: 
-        version: '1.9'
-      java:
-        version: '8'
-        gradle:
-          version: '4.3' 
   roles:
-   - docker
-   - zsh
    - tmux
+   - zsh
+   - git
    - vim
 #  - go
 #  - nodejs
-#  - git
 #  - java
 #  - python
 #  - terraform

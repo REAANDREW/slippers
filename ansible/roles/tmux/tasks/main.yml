@@ -1,19 +1,19 @@
 # vim:ft=ansible:
 ---
 - block:
-  - name: Purge Locales
-    command: apt-get purge -y locales
+# - name: Purge Locales
+#   command: apt-get purge -y locales
   - name: Install list of packages
-    apt: 
+    apk: 
       name: "{{ item }}"
       state: installed 
       update_cache: yes
     with_items:
-    - python-pip
-    - locales
+    - py-pip
+#   - locales
     - tmux
-  - name: Reconfigure GB Locale
-    command: dpkg-reconfigure -f noninteractive locales
+# - name: Reconfigure GB Locale
+#   command: dpkg-reconfigure -f noninteractive locales
 # - name: Ensure GB Locale
 #   command: LC_ALL="en_GB.UTF-8" locale-gen 
   - name: Install Powerline Status
