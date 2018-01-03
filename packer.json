@@ -1,7 +1,8 @@
 {
   "variables": {
     "ansible_host": "default",
-    "ansible_connection": "docker"
+    "ansible_connection": "docker",
+    "tag": ""
   },
   "builders": [
     {
@@ -38,7 +39,7 @@
     {
       "type": "ansible",
       "user": "root",
-      "playbook_file": "./ansible/base.yml",
+      "playbook_file": "./ansible/playbook.yml",
       "extra_arguments": [
         "--extra-vars",
         "ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}"
@@ -49,7 +50,8 @@
     [
       {
         "type": "docker-tag",
-        "repository": "reaandrew/devenv_base"
+        "repository": "reaandrew/devenv_base",
+	"tag": "{{user `tag`}}"
       }
     ]
   ]

@@ -1,6 +1,10 @@
 ---
 - name: Installing Zsh and git
-  apk: name=zsh,git state=latest
+  apk: 
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - zsh
   register: installation
   become: yes
   become_method: sudo

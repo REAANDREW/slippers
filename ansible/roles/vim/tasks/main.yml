@@ -12,6 +12,7 @@
   - make
   - gcc
   - gawk
+  - clang-libs
   - ncurses-dev
   - ncurses-libs
   - python

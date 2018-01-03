@@ -2,26 +2,12 @@
 - hosts: all
   vars:
     os:
-      user: ubuntu
+      user: talula
     languages:
       python:
-      go: 
-        version: '1.9'
-      java:
-        version: '8'
-        gradle:
-          version: '4.3' 
   roles:
-   - docker
+   - base
+   - git
    - zsh
    - tmux
    - vim
-#  - go
-#  - nodejs
-#  - git
-#  - java
-#  - python
-#  - terraform
-#  - packer
-#  - awscli
-#  - gcloud
