@@ -60,6 +60,9 @@
     make VIMRUNTIMEDIR=/usr/local/share/vim/vim80 &&
     make install
     chdir=/opt/vim
+- name: Ensure vim directory
+  file: path="/home/{{ os.user }}/.vim" owner="{{ os.user }}" group="{{ os.user }}" state=directory
+  become: no
 - name: Ensure vim plugin directory
   file: path="/home/{{ os.user }}/.vim/pack/plugins/start/" state=directory
   become: no
@@ -112,8 +115,7 @@
   copy: src=template.editorconfig dest="/home/{{ os.user }}/.editorconfig" owner="{{ os.user }}" group="{{ os.user }}" mode=0644
   become: no
 - name: Configure YouCompleteMe
-  become: yes
-  become_method: sudo
+  become: no
   shell: |
     ./install.py 
     chdir=/home/talula/.vim/pack/plugins/start/YouCompleteMe
@@ -122,3 +124,12 @@
   shell: |
     cd /home/talula/.vim/pack/plugins/start/
     find -type d -name .git | xargs rm -r
+- name: Ensure Ownership of vim directory
+  become: yes
+  become_method: sudo
+  file:
+    path: "/home/{{ os.user }}/.vim/"
+    owner: "{{ os.user }}"
+    group: "{{ os.user }}"
+    recurse: yes
+    state: directory

@@ -50,8 +50,7 @@
     [
       {
         "type": "docker-tag",
-        "repository": "reaandrew/devenv_base",
-	"tag": "{{user `tag`}}"
+        "repository": "reaandrew/devenv_base"
       }
     ]
   ]
