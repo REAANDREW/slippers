@@ -2,7 +2,7 @@
 - hosts: all
   vars:
     os:
-      user: talula
+      user: vagrant
     languages:
       python:
   roles:

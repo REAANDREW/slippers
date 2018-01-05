@@ -118,11 +118,11 @@
   become: no
   shell: |
     ./install.py 
-    chdir=/home/talula/.vim/pack/plugins/start/YouCompleteMe
+    chdir=/home/{{ os.user }}/.vim/pack/plugins/start/YouCompleteMe
 - name: Delete All the .git directories
   become: no
   shell: |
-    cd /home/talula/.vim/pack/plugins/start/
+    cd /home/{{ os.user }}/.vim/pack/plugins/start/
     find -type d -name .git | xargs rm -r
 - name: Ensure Ownership of vim directory
   become: yes

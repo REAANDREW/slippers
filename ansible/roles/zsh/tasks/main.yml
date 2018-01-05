@@ -40,12 +40,4 @@
   become: yes
   become_method: sudo
   shell: |
-    bash -c 'chsh talula -s /bin/zsh'
-
-# - name: Set zsh as default shell
-#   user: 
-#     name: "{{ os.user }}"
-#     shell: /bin/zsh
-#   become: yes
-#   become_method: sudo
-
+    bash -c 'chsh {{ os.user  }} -s /bin/zsh'
