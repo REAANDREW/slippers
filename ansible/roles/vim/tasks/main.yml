@@ -94,8 +94,6 @@
       repo: vim-multiple-cursors
     - org: nathanaelkane
       repo: vim-indent-guides
-    - org: pangloss
-      repo: vim-javascript
     - org: artur-shaik
       repo: vim-javacomplete2
     - org: Valloric
