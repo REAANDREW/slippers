@@ -13,3 +13,6 @@ docker_push:
 	docker push reaandrew/devenv_base:latest
 	docker push reaandrew/devenv_base:`cat VERSION`
 
+.PHONY: vagrant_package
+vagrant_package:
+	vagrant package --base devenv_base --output devenv_base_`cat VERSION`.box
