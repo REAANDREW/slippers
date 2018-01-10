@@ -4,12 +4,12 @@
 # - name: Purge Locales
 #   command: apt-get purge -y locales
   - name: Install list of packages
-    apk: 
+    apt: 
       name: "{{ item }}"
       state: installed 
       update_cache: yes
     with_items:
-    - py-pip
+    - python-pip
 #   - locales
     - tmux
 # - name: Reconfigure GB Locale

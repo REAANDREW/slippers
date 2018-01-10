@@ -1,12 +1,12 @@
 ---
 - name: Installing base packages
-  apk: 
+  apt: 
     name: "{{ item }}"
     state: installed
   with_items:
     - tar
     - unzip
     - jq
-    - xz
+    - xz-utils
   become: yes
   become_method: sudo

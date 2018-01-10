@@ -3,7 +3,7 @@
 - name: Install list of packages
   become: yes
   become_method: sudo
-  apk: 
+  apt: 
     name: "{{ item }}"
     state: installed 
     update_cache: yes
@@ -12,19 +12,20 @@
   - make
   - gcc
   - gawk
-  - clang-libs
-  - ncurses-dev
-  - ncurses-libs
+ #- clang-libs
+  - libclang-dev
+  - ncurses-base
+  - libncurses5-dev
   - python
   - python-dev 
   - ruby
   - ruby-dev
   - lua5.1
-  - lua5.1-dev
+  - liblua5.1-0-dev
   - perl
-  - perl-dev
+  - libperl-dev
   - luajit
-  - luajit-dev
+  - libluajit-5.1-dev
   - git
   - ctags
   - cmake
