@@ -10,8 +10,6 @@ Vagrant.configure(2) do |config|
   config.ssh.forward_agent = true
   config.ssh.insert_key = false
 
-  #config.vm.provision :shell, inline: "sudo apk --update add curl tar zip unzip shadow python sudo bash py-pip && curl -Ls https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.25-r0/glibc-2.25-r0.apk > /tmp/glibc-2.25-r0.apk && apk add --allow-untrusted /tmp/glibc-2.25-r0.apk"
-
   config.vm.provision "ansible" do |ansible|
      ansible.playbook = "ansible/playbook.yml"
   end

@@ -8,5 +8,7 @@
     - unzip
     - jq
     - xz-utils
+    #Make vagrant compatibubble with 17.10
+    - ifupdown 
   become: yes
   become_method: sudo
