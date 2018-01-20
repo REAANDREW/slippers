@@ -22,20 +22,6 @@
   when: installation|success
   become: no
 
-- name: add POWERLINE to zsh
-  lineinfile: 
-    dest: "/home/{{ os.user }}/.zshrc"
-    line: |
-      export POWERLINE_ROOT=$(pip show powerline-status | grep Location | cut -d: -f2 | tr -d " ")
-  become: no
-
-- name: source POWERLINE in zsh
-  lineinfile:
-    dest: "/home/{{ os.user }}/.zshrc"
-    line: |
-      . ${POWERLINE_ROOT}/powerline/bindings/zsh/powerline.zsh
-  become: no
-
 - name: Set zsh as default shell
   become: yes
   become_method: sudo
