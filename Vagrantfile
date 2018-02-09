@@ -10,6 +10,8 @@ Vagrant.configure(2) do |config|
   config.ssh.forward_agent = true
   config.ssh.insert_key = false
 
+  config.vm.provision :shell, inline: 'DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade'
+
   config.vm.provision "ansible" do |ansible|
      ansible.playbook = "ansible/playbook.yml"
   end
